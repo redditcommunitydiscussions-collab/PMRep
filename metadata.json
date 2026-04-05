@@ -1,0 +1,5 @@
+{
+  "name": "PM Interview Coach",
+  "description": "An AI interview training coach specialized for Manmohan Sharma to prepare for Meta and similar PM interviews.",
+  "requestFramePermissions": ["microphone"]
+}

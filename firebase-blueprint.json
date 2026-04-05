@@ -1,0 +1,103 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user profile storing their overall stats and how they think.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "lastActiveAt": { "type": "timestamp" }
+      },
+      "required": ["uid", "email", "createdAt", "lastActiveAt"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "A generated question that can be reused by other users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "prompt": { "type": "string" },
+        "mode": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "generatedByUid": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["id", "prompt", "mode", "generatedByUid", "createdAt"]
+    },
+    "DrillSession": {
+      "title": "DrillSession",
+      "description": "A session of drills completed by a user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "uid": { "type": "string" },
+        "date": { "type": "string" },
+        "mode": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["id", "uid", "date", "mode", "createdAt"]
+    },
+    "DrillRep": {
+      "title": "DrillRep",
+      "description": "A single drill attempt within a session.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "uid": { "type": "string" },
+        "prompt": { "type": "string" },
+        "expectedMode": { "type": "string" },
+        "userSelectedMode": { "type": "string" },
+        "userAnswer": { "type": "string" },
+        "timeTakenSeconds": { "type": "number" },
+        "critique": { "type": "string" },
+        "correctedAnswer": { "type": "string" },
+        "mistakeTags": { 
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "strengthTags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "microLesson": { "type": "string" },
+        "scores": {
+          "type": "object",
+          "properties": {
+            "modeSelection": { "type": "number" },
+            "structure": { "type": "number" },
+            "clarity": { "type": "number" },
+            "focus": { "type": "number" },
+            "concreteness": { "type": "number" },
+            "solutionSizingOrMetricLogic": { "type": "number" },
+            "recoveryUnderPressure": { "type": "number" }
+          }
+        },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["id", "sessionId", "uid", "prompt", "userSelectedMode", "userAnswer", "timeTakenSeconds", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles."
+    },
+    "/questions/{questionId}": {
+      "schema": { "$ref": "#/entities/Question" },
+      "description": "Generated questions."
+    },
+    "/sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/DrillSession" },
+      "description": "User drill sessions."
+    },
+    "/reps/{repId}": {
+      "schema": { "$ref": "#/entities/DrillRep" },
+      "description": "User drill reps."
+    }
+  }
+}
